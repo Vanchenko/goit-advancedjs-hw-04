@@ -64,7 +64,7 @@ refs.srhFormEl.addEventListener("submit", (event) => {
     refs.loadPict.style.display = "none";
     refs.spinner.style.display = "inline-block";
   
-    console.log("Search:", options.params.q);
+    // console.log("Search:", options.params.q);
     loadPictures()
         .then((pictures) => {
             if (pictures.data.hits.length > 0) {
