@@ -1,0 +1,20 @@
+import{a as m,S as g,i as d}from"./assets/vendor-BgmC94F3.js";(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))p(r);new MutationObserver(r=>{for(const l of r)if(l.type==="childList")for(const c of l.addedNodes)c.tagName==="LINK"&&c.rel==="modulepreload"&&p(c)}).observe(document,{childList:!0,subtree:!0});function o(r){const l={};return r.integrity&&(l.integrity=r.integrity),r.referrerPolicy&&(l.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?l.credentials="include":r.crossOrigin==="anonymous"?l.credentials="omit":l.credentials="same-origin",l}function p(r){if(r.ep)return;r.ep=!0;const l=o(r);fetch(r.href,l)}})();const e={lmBtnEl:document.querySelector(".load-more"),galleryEl:document.querySelector(".gallery"),srhFormEl:document.querySelector("#search-form"),foundPict:document.querySelector("#found-pictures"),loadPict:document.querySelector("#load-pictures"),spinner:document.querySelector(".loader")},h="https://pixabay.com/api/",n={params:{key:"35244614-3f1384186f27e7cacc119fb8b",page:1,per_page:50,image_type:"photo",orientation:"horizontal",safesearch:!0}},y=async()=>await m.get(h,n);let b=new g(".gallery a",{enableKeyboard:!0,captionPosition:"bottom",captionSelector:"img",captionType:"attr",captionsData:"alt",captionDelay:250,showCounter:!1});function u(s){let t="";t=s.data.hits.map(o=>`<div class="photo-card">
+            <a class="gallery link" href="${o.largeImageURL}">
+            <img src="${o.webformatURL}" alt="${o.tags}" width="250" height="200" loading="lazy"/> 
+            </a>
+            <div class="info">
+                <p class="info-item">
+                    <b>Likes ${o.likes}</b>
+                </p>
+                <p class="info-item">
+                    <b>Views ${o.views}</b>
+                </p>
+                <p class="info-item">
+                    <b>Comments ${o.comments}</b>
+                </p>
+                <p class="info-item">
+                    <b>Downloads ${o.downloads}</b>
+                </p>
+            </div>
+            </div>`).join(""),e.galleryEl.style.display="flex",e.galleryEl.style.flexWrap="wrap",e.galleryEl.style.justifyContent="center",e.galleryEl.insertAdjacentHTML("beforeend",t),b.refresh()}function f(s,t){e.foundPict.style.display="flex",e.loadPict.style.display="flex",e.foundPict.textContent=`Found pictures :${s}`,e.loadPict.textContent=`Load pictures :${t}`}e.lmBtnEl.style.display="none";e.foundPict.style.display="none";e.loadPict.style.display="none";e.spinner.style.display="none";let i=1,a=0;const E=n.params.per_page,w={root:null,rootMargin:"300px",threshold:1},P=function(s,t){s[0].isIntersecting&&(i+=1,n.params.page=i,t.disconnect(),y().then(o=>{if(a=a+o.data.hits.length,o.data.totalHits<a){o.data.totalHits>E&&(e.lmBtnEl.style.display="flex"),d.show({message:"We're sorry, but you've reached the end of search results.",position:"topCenter"});return}u(o),f(o.data.totalHits,a),t.observe(e.galleryEl.lastChild)}).catch(o=>{console.log(o.response)}))},L=new IntersectionObserver(P,w);e.srhFormEl.addEventListener("submit",s=>{if(s.preventDefault(),n.params.q=e.srhFormEl.elements[0].value.trim(),n.params.q===""){console.log("return"),s.currentTarget.reset();return}s.currentTarget.reset(),i=1,n.params.page=i,a=0,e.lmBtnEl.style.display="none",e.srhFormEl.children[1].setAttribute("disabled","true"),e.galleryEl.innerHTML="",e.foundPict.style.display="none",e.loadPict.style.display="none",e.spinner.style.display="inline-block",y().then(t=>{t.data.hits.length>0?(d.show({message:`Hooray! We found ${t.data.totalHits} images.`,position:"topCenter"}),e.spinner.style.display="none",u(t),a=a+t.data.hits.length,f(t.data.totalHits,a),L.observe(e.galleryEl.lastChild)):d.show({message:`Sorry, there are no images matching your search query: "${n.params.q}".`,position:"topCenter"})}).catch(t=>{console.log(t)}).finally(()=>{setTimeout(()=>{e.srhFormEl.children[1].removeAttribute("disabled")},3e3)})});e.lmBtnEl.addEventListener("click",()=>{window.scroll(0,0)});
+//# sourceMappingURL=index.js.map
