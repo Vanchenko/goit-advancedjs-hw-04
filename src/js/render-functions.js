@@ -16,35 +16,38 @@ export function renderGallery(pictures) {
     let markUp = "";
     markUp = pictures.data.hits.map((elem) => `<div class="photo-card">
             <a class="gallery link" href="${elem.largeImageURL}">
-            <img src="${elem.webformatURL}" alt="${elem.tags}" width="250" height="200" loading="lazy"/> 
+                <img src="${elem.webformatURL}" alt="${elem.tags}" width="360" height="200" loading="lazy"/> 
             </a>
-            <div class="info">
-                <p class="info-item">
-                    <b>Likes ${elem.likes}</b>
-                </p>
-                <p class="info-item">
-                    <b>Views ${elem.views}</b>
-                </p>
-                <p class="info-item">
-                    <b>Comments ${elem.comments}</b>
-                </p>
-                <p class="info-item">
-                    <b>Downloads ${elem.downloads}</b>
-                </p>
-            </div>
+            <ul class="info">
+                <li class="info-item">
+                    <b>Likes</b>
+                    <p>${elem.likes}</p>
+                </li>
+                <li class="info-item">
+                    <b>Views</b>
+                    <p>${elem.views}</p>
+                </li>
+                <li class="info-item">
+                    <b>Comments</b>
+                    <p>${elem.comments}</p>
+                </li>
+                <li class="info-item">
+                    <b>Downloads</b>
+                    <p>${elem.downloads}</p>
+                </li>
+            </ul>
             </div>`).join("");
-    refs.galleryEl.style.display = "flex";
-    refs.galleryEl.style.flexWrap = "wrap";
-    refs.galleryEl.style.justifyContent = "center";
     refs.galleryEl.insertAdjacentHTML("beforeend", markUp);
     gallery.refresh();
 
    // observer.observe(refs.galleryEl.lastChild);
 }
 
-export function renderInfoline(qqpict, pictTotal) {
+export function renderInfoline(qqpict, pictTotal, page) {
     refs.foundPict.style.display = "flex";
     refs.loadPict.style.display = "flex";
+    refs.currentPage.style.display = "flex";
     refs.foundPict.textContent = `Found pictures :${qqpict}`;
     refs.loadPict.textContent = `Load pictures :${pictTotal}`;
+    refs.currentPage.textContent = `Page :${page}`;
 }
